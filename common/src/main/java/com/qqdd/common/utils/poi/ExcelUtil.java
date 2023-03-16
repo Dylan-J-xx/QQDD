@@ -9,7 +9,6 @@ import com.qqdd.common.core.domain.AjaxResult;
 import com.qqdd.common.core.text.Convert;
 import com.qqdd.common.exception.UtilException;
 import com.qqdd.common.utils.DateUtils;
-import com.qqdd.common.utils.DictUtils;
 import com.qqdd.common.utils.StringUtils;
 import com.qqdd.common.utils.file.FileTypeUtils;
 import com.qqdd.common.utils.file.FileUtils;
