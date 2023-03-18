@@ -1,9 +1,9 @@
 package com.framework.config;
 
-import com.qqdd.framework.config.properties.PermitAllUrlProperties;
-import com.qqdd.framework.security.filter.JwtAuthenticationTokenFilter;
-import com.qqdd.framework.security.handle.AuthenticationEntryPointImpl;
-import com.qqdd.framework.security.handle.LogoutSuccessHandlerImpl;
+import com.framework.config.properties.PermitAllUrlProperties;
+import com.framework.security.filter.JwtAuthenticationTokenFilter;
+import com.framework.security.handle.AuthenticationEntryPointImpl;
+import com.framework.security.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

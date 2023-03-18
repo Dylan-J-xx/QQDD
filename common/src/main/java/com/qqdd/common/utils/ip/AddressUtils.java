@@ -2,7 +2,7 @@ package com.qqdd.common.utils.ip;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.qqdd.common.config.qqddConfig;
+import com.qqdd.common.config.Config;
 import com.qqdd.common.constant.Constants;
 import com.qqdd.common.utils.StringUtils;
 import com.qqdd.common.utils.http.HttpUtils;
@@ -27,17 +27,13 @@ public class AddressUtils
     public static String getRealAddressByIP(String ip)
     {
         // 内网不查询
-        if (IpUtils.internalIp(ip))
-        {
+        if (IpUtils.internalIp(ip)) {
             return "内网IP";
         }
-        if (qqddConfig.isAddressEnabled())
-        {
-            try
-            {
+        if (Config.isAddressEnabled()) {
+            try {
                 String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", Constants.GBK);
-                if (StringUtils.isEmpty(rspStr))
-                {
+                if (StringUtils.isEmpty(rspStr)) {
                     log.error("获取地理位置异常 {}", ip);
                     return UNKNOWN;
                 }

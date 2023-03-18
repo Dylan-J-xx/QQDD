@@ -4,7 +4,7 @@ import com.qqdd.common.core.domain.entity.SysRole;
 import com.qqdd.common.core.domain.model.LoginUser;
 import com.qqdd.common.utils.SecurityUtils;
 import com.qqdd.common.utils.StringUtils;
-import com.qqdd.framework.security.context.PermissionContextHolder;
+import com.framework.security.context.PermissionContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

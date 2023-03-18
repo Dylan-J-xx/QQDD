@@ -7,7 +7,7 @@ import com.qqdd.common.core.redis.RedisCache;
 import com.qqdd.common.filter.RepeatedlyRequestWrapper;
 import com.qqdd.common.utils.StringUtils;
 import com.qqdd.common.utils.http.HttpHelper;
-import com.qqdd.framework.interceptor.RepeatSubmitInterceptor;
+import com.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -102,10 +102,6 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor
     {
         long time1 = (Long) nowMap.get(REPEAT_TIME);
         long time2 = (Long) preMap.get(REPEAT_TIME);
-        if ((time1 - time2) < interval)
-        {
-            return true;
-        }
-        return false;
+        return (time1 - time2) < interval;
     }
 }

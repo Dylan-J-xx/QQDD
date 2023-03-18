@@ -1,8 +1,8 @@
 package com.framework.config;
 
-import com.qqdd.common.config.qqddConfig;
+import com.qqdd.common.config.Config;
 import com.qqdd.common.constant.Constants;
-import com.qqdd.framework.interceptor.RepeatSubmitInterceptor;
+import com.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ public class ResourcesConfig implements WebMvcConfigurer
     {
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" + qqddConfig.getProfile() + "/");
+                .addResourceLocations("file:" + Config.getProfile() + "/");
 
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")

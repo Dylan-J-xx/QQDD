@@ -6,8 +6,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatPropertie
 import com.alibaba.druid.util.Utils;
 import com.qqdd.common.enums.DataSourceType;
 import com.qqdd.common.utils.spring.SpringUtils;
-import com.qqdd.framework.config.properties.DruidProperties;
-import com.qqdd.framework.datasource.DynamicDataSource;
+import com.framework.config.properties.DruidProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -46,16 +45,7 @@ public class DruidConfig
         return druidProperties.dataSource(dataSource);
     }
 
-    @Bean(name = "dynamicDataSource")
-    @Primary
-    public DynamicDataSource dataSource(DataSource masterDataSource)
-    {
-        Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put(DataSourceType.MASTER.name(), masterDataSource);
-        setDataSource(targetDataSources, DataSourceType.SLAVE.name(), "slaveDataSource");
-        return new DynamicDataSource(masterDataSource, targetDataSources);
-    }
-    
+
     /**
      * 设置数据源
      * 
