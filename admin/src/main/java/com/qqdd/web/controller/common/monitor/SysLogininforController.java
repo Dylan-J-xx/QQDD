@@ -6,7 +6,7 @@ import com.qqdd.common.core.domain.AjaxResult;
 import com.qqdd.common.core.page.TableDataInfo;
 import com.qqdd.common.enums.BusinessType;
 import com.qqdd.common.utils.poi.ExcelUtil;
-import com.framework.web.service.SysPasswordService;
+import com.qqdd.framework.web.service.SysPasswordService;
 import com.qqdd.system.domain.SysLogininfor;
 import com.qqdd.system.service.ISysLogininforService;
 import org.springframework.beans.factory.annotation.Autowired;

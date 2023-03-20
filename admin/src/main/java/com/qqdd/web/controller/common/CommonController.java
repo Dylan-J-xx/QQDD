@@ -6,7 +6,7 @@ import com.qqdd.common.core.domain.AjaxResult;
 import com.qqdd.common.utils.StringUtils;
 import com.qqdd.common.utils.file.FileUploadUtils;
 import com.qqdd.common.utils.file.FileUtils;
-import com.framework.config.ServerConfig;
+import com.qqdd.framework.config.ServerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
