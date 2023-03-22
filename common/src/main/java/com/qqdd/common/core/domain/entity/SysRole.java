@@ -80,10 +80,6 @@ public class SysRole extends BaseEntity {
      */
     private Long[] menuIds;
 
-    /**
-     * 部门组（数据权限）
-     */
-    private Long[] deptIds;
 
     /**
      * 角色菜单权限
@@ -199,13 +195,7 @@ public class SysRole extends BaseEntity {
         this.menuIds = menuIds;
     }
 
-    public Long[] getDeptIds() {
-        return deptIds;
-    }
 
-    public void setDeptIds(Long[] deptIds) {
-        this.deptIds = deptIds;
-    }
 
     public Set<String> getPermissions() {
         return permissions;
