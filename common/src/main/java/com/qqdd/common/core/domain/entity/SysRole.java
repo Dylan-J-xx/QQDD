@@ -151,13 +151,6 @@ public class SysRole extends BaseEntity {
         this.menuCheckStrictly = menuCheckStrictly;
     }
 
-    public boolean isDeptCheckStrictly() {
-        return deptCheckStrictly;
-    }
-
-    public void setDeptCheckStrictly(boolean deptCheckStrictly) {
-        this.deptCheckStrictly = deptCheckStrictly;
-    }
 
     public String getStatus() {
         return status;
@@ -210,7 +203,6 @@ public class SysRole extends BaseEntity {
                 .append("roleSort", getRoleSort())
                 .append("dataScope", getDataScope())
                 .append("menuCheckStrictly", isMenuCheckStrictly())
-                .append("deptCheckStrictly", isDeptCheckStrictly())
                 .append("status", getStatus())
                 .append("delFlag", getDelFlag())
                 .append("createBy", getCreateBy())
