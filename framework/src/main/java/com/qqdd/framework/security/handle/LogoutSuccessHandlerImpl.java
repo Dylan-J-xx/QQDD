@@ -6,7 +6,6 @@ import com.qqdd.common.core.domain.AjaxResult;
 import com.qqdd.common.core.domain.model.LoginUser;
 import com.qqdd.common.utils.ServletUtils;
 import com.qqdd.common.utils.StringUtils;
-import com.qqdd.framework.manager.AsyncManager;
 import com.qqdd.framework.manager.factory.AsyncFactory;
 import com.qqdd.framework.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
             // 删除用户缓存记录
             tokenService.delLoginUser(loginUser.getToken());
             // 记录用户退出日志
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(userName, Constants.LOGOUT, "退出成功"));
+            AsyncFactory.recordLogininfor(userName, Constants.LOGOUT, "退出成功");
         }
         ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.success("退出成功")));
     }

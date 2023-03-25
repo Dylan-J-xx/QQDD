@@ -11,11 +11,7 @@
         <search id="header-search" class="right-menu-item"/>
 
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect"/>
-        </el-tooltip>
-
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect"/>
+          <git id="git" class="right-menu-item hover-effect"/>
         </el-tooltip>
 
         <screenfull id="screenfull" class="right-menu-item hover-effect"/>
@@ -28,7 +24,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
+          <img class="el-icon-user-solid">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -55,19 +51,17 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import RuoYiGit from '@/components/RuoYi/Git'
-import RuoYiDoc from '@/components/RuoYi/Doc'
+import Git from "@/components/Git/index.vue";
 
 export default {
   components: {
+    Git,
     Breadcrumb,
     TopNav,
     Hamburger,
     Screenfull,
     SizeSelect,
     Search,
-    RuoYiGit,
-    RuoYiDoc
   },
   computed: {
     ...mapGetters([
@@ -181,12 +175,6 @@ export default {
         margin-top: 5px;
         position: relative;
 
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
 
         .el-icon-caret-bottom {
           cursor: pointer;

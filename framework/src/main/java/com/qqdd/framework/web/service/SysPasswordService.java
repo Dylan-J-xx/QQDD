@@ -8,7 +8,6 @@ import com.qqdd.common.exception.user.UserPasswordNotMatchException;
 import com.qqdd.common.exception.user.UserPasswordRetryLimitExceedException;
 import com.qqdd.common.utils.MessageUtils;
 import com.qqdd.common.utils.SecurityUtils;
-import com.qqdd.framework.manager.AsyncManager;
 import com.qqdd.framework.manager.factory.AsyncFactory;
 import com.qqdd.framework.security.context.AuthenticationContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,15 +55,15 @@ public class SysPasswordService {
         }
 
         if (retryCount >= Integer.valueOf(maxRetryCount).intValue()) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
-                    MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount, lockTime)));
+            AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
+                    MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount, lockTime));
             throw new UserPasswordRetryLimitExceedException(maxRetryCount, lockTime);
         }
 
         if (!matches(user, password)) {
             retryCount = retryCount + 1;
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
-                    MessageUtils.message("user.password.retry.limit.count", retryCount)));
+            AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
+                    MessageUtils.message("user.password.retry.limit.count", retryCount));
             redisCache.setCacheObject(getCacheKey(username), retryCount, lockTime, TimeUnit.MINUTES);
             throw new UserPasswordNotMatchException();
         } else {

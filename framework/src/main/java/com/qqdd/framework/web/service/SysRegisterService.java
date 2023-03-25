@@ -11,7 +11,6 @@ import com.qqdd.common.exception.user.CaptchaExpireException;
 import com.qqdd.common.utils.MessageUtils;
 import com.qqdd.common.utils.SecurityUtils;
 import com.qqdd.common.utils.StringUtils;
-import com.qqdd.framework.manager.AsyncManager;
 import com.qqdd.framework.manager.factory.AsyncFactory;
 import com.qqdd.system.service.ISysConfigService;
 import com.qqdd.system.service.ISysUserService;
@@ -67,7 +66,7 @@ public class SysRegisterService {
             if (!regFlag) {
                 msg = "注册失败,请联系系统管理人员";
             } else {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.register.success")));
+                AsyncFactory.recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.register.success"));
             }
         }
         return msg;
