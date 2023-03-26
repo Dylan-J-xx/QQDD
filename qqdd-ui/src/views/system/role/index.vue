@@ -274,7 +274,6 @@ import {
   updateRole,
   dataScope,
   changeRoleStatus,
-  deptTreeSelect
 } from "@/api/system/role";
 import {treeselect as menuTreeselect, roleMenuTreeselect} from "@/api/system/menu";
 
@@ -406,13 +405,6 @@ export default {
     getRoleMenuTreeselect(roleId) {
       return roleMenuTreeselect(roleId).then(response => {
         this.menuOptions = response.menus;
-        return response;
-      });
-    },
-    /** 根据角色ID查询部门树结构 */
-    getDeptTree(roleId) {
-      return deptTreeSelect(roleId).then(response => {
-        this.deptOptions = response.depts;
         return response;
       });
     },
@@ -555,20 +547,20 @@ export default {
       }
     },
     /** 分配数据权限操作 */
-    handleDataScope(row) {
-      this.reset();
-      const deptTreeSelect = this.getDeptTree(row.roleId);
-      getRole(row.roleId).then(response => {
-        this.form = response.data;
-        this.openDataScope = true;
-        this.$nextTick(() => {
-          deptTreeSelect.then(res => {
-            this.$refs.dept.setCheckedKeys(res.checkedKeys);
-          });
-        });
-        this.title = "分配数据权限";
-      });
-    },
+    // handleDataScope(row) {
+    //   this.reset();
+    //   const deptTreeSelect = this.getDeptTree(row.roleId);
+    //   getRole(row.roleId).then(response => {
+    //     this.form = response.data;
+    //     this.openDataScope = true;
+    //     this.$nextTick(() => {
+    //       deptTreeSelect.then(res => {
+    //         this.$refs.dept.setCheckedKeys(res.checkedKeys);
+    //       });
+    //     });
+    //     this.title = "分配数据权限";
+    //   });
+    // },
     /** 分配用户操作 */
     handleAuthUser: function (row) {
       const roleId = row.roleId;

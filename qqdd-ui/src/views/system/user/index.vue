@@ -1,32 +1,6 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <!--部门数据-->
-      <el-col :span="4" :xs="24">
-        <div class="head-container">
-          <el-input
-            v-model="deptName"
-            placeholder="请输入部门名称"
-            clearable
-            size="small"
-            prefix-icon="el-icon-search"
-            style="margin-bottom: 20px"
-          />
-        </div>
-        <div class="head-container">
-          <el-tree
-            :data="deptOptions"
-            :props="defaultProps"
-            :expand-on-click-node="false"
-            :filter-node-method="filterNode"
-            ref="tree"
-            node-key="id"
-            default-expand-all
-            highlight-current
-            @node-click="handleNodeClick"
-          />
-        </div>
-      </el-col>
       <!--用户数据-->
       <el-col :span="20" :xs="24">
         <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch"
@@ -149,11 +123,9 @@
                            :show-overflow-tooltip="true"/>
           <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible"
                            :show-overflow-tooltip="true"/>
-          <el-table-column label="部门" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible"
-                           :show-overflow-tooltip="true"/>
           <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber"
-                           v-if="columns[4].visible" width="120"/>
-          <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
+                           v-if="columns[3].visible" width="120"/>
+          <el-table-column label="状态" align="center" key="status" v-if="columns[4].visible">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -163,7 +135,7 @@
               ></el-switch>
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
+          <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[5].visible" width="160">
             <template slot-scope="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
@@ -226,11 +198,6 @@
               <el-input v-model="form.nickName" placeholder="请输入用户昵称" maxlength="30"/>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <treeselect v-model="form.deptId" :options="deptOptions" :show-count="true" placeholder="请选择归属部门"/>
-            </el-form-item>
-          </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -284,19 +251,6 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="岗位">
-              <el-select v-model="form.postIds" multiple placeholder="请选择岗位">
-                <el-option
-                  v-for="item in postOptions"
-                  :key="item.postId"
-                  :label="item.postName"
-                  :value="item.postId"
-                  :disabled="item.status == 1"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
           <el-col :span="12">
             <el-form-item label="角色">
               <el-select v-model="form.roleIds" multiple placeholder="请选择角色">
@@ -369,7 +323,6 @@ import {
   updateUser,
   resetUserPwd,
   changeUserStatus,
-  deptTreeSelect
 } from "@/api/system/user";
 import {getToken} from "@/utils/auth";
 import Treeselect from "@riophae/vue-treeselect";
@@ -401,14 +354,10 @@ export default {
       deptOptions: undefined,
       // 是否显示弹出层
       open: false,
-      // 部门名称
-      deptName: undefined,
       // 默认密码
       initPassword: undefined,
       // 日期范围
       dateRange: [],
-      // 岗位选项
-      postOptions: [],
       // 角色选项
       roleOptions: [],
       // 表单参数
@@ -439,17 +388,15 @@ export default {
         userName: undefined,
         phonenumber: undefined,
         status: undefined,
-        deptId: undefined
       },
       // 列信息
       columns: [
         {key: 0, label: `用户编号`, visible: true},
         {key: 1, label: `用户名称`, visible: true},
         {key: 2, label: `用户昵称`, visible: true},
-        {key: 3, label: `部门`, visible: true},
-        {key: 4, label: `手机号码`, visible: true},
-        {key: 5, label: `状态`, visible: true},
-        {key: 6, label: `创建时间`, visible: true}
+        {key: 3, label: `手机号码`, visible: true},
+        {key: 4, label: `状态`, visible: true},
+        {key: 5, label: `创建时间`, visible: true}
       ],
       // 表单校验
       rules: {
@@ -481,15 +428,9 @@ export default {
       }
     };
   },
-  watch: {
-    // 根据名称筛选部门树
-    deptName(val) {
-      this.$refs.tree.filter(val);
-    }
-  },
+  watch: {},
   created() {
     this.getList();
-    this.getDeptTree();
     this.getConfigKey("sys.user.initPassword").then(response => {
       this.initPassword = response.msg;
     });
@@ -505,12 +446,7 @@ export default {
         }
       );
     },
-    /** 查询部门下拉树结构 */
-    getDeptTree() {
-      deptTreeSelect().then(response => {
-        this.deptOptions = response.data;
-      });
-    },
+
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
@@ -541,7 +477,6 @@ export default {
     reset() {
       this.form = {
         userId: undefined,
-        deptId: undefined,
         userName: undefined,
         nickName: undefined,
         password: undefined,
@@ -550,7 +485,6 @@ export default {
         sex: undefined,
         status: "0",
         remark: undefined,
-        postIds: [],
         roleIds: []
       };
       this.resetForm("form");
@@ -606,7 +540,6 @@ export default {
         this.form = response.data;
         this.postOptions = response.posts;
         this.roleOptions = response.roles;
-        this.$set(this.form, "postIds", response.postIds);
         this.$set(this.form, "roleIds", response.roleIds);
         this.open = true;
         this.title = "修改用户";
