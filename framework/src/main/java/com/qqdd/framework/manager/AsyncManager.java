@@ -10,7 +10,7 @@
 ///**
 // * 异步任务管理器
 // *
-// * @author ruoyi
+// * @author qqdd
 // */
 //public class AsyncManager {
 //    /**

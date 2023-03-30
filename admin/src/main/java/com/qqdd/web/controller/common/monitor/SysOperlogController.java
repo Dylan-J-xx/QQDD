@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 操作日志记录
  *
- * @author ruoyi
+ * @author qqdd
  */
 @RestController
 @RequestMapping("/monitor/operlog")

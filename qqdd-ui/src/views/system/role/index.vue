@@ -445,7 +445,6 @@ export default {
           roleSort: 0,
           status: "0",
           menuIds: [],
-          deptIds: [],
           menuCheckStrictly: true,
           deptCheckStrictly: true,
           remark: undefined
@@ -591,7 +590,6 @@ export default {
     /** 提交按钮（数据权限） */
     submitDataScope: function () {
       if (this.form.roleId != undefined) {
-        this.form.deptIds = this.getDeptAllCheckedKeys();
         dataScope(this.form).then(response => {
           this.$modal.msgSuccess("修改成功");
           this.openDataScope = false;

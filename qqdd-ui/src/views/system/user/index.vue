@@ -454,7 +454,6 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data) {
-      this.queryParams.deptId = data.id;
       this.handleQuery();
     },
     // 用户状态修改
@@ -498,7 +497,6 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
-      this.queryParams.deptId = undefined;
       this.$refs.tree.setCurrentKey(null);
       this.handleQuery();
     },

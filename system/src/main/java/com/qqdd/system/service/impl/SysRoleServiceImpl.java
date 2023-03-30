@@ -25,7 +25,7 @@ import java.util.*;
 /**
  * 角色 业务层处理
  *
- * @author ruoyi
+ * @author qqdd
  */
 @Service
 public class SysRoleServiceImpl implements ISysRoleService {
@@ -235,22 +235,20 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return roleMapper.updateRole(role);
     }
 
-    ///**
-    // * 修改数据权限信息
-    // *
-    // * @param role 角色信息
-    // * @return 结果
-    // */
-    //@Override
-    //@Transactional
-    //public int authDataScope(SysRole role)
-    //{
-    //    // 修改角色信息
-    //    roleMapper.updateRole(role);
-    //
-    //    // 新增角色和部门信息（数据权限）
-    //    return insertRoleDept(role);
-    //}
+    /**
+     * 修改数据权限信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public int authDataScope(SysRole role) {
+        // 修改角色信息
+
+
+        return roleMapper.updateRole(role);
+    }
 
     /**
      * 新增角色菜单信息
