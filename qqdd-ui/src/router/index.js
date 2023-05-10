@@ -107,6 +107,48 @@ export const dynamicRoutes = [
     ]
   },
   {
+    path: '',
+    component: Layout,
+    hidden: true,
+    permissions: ['compo:chat'],
+    children: [
+      {
+        path: '/compo/chat',
+        component: () => import('@/views/system/chat/chatGPT.vue'),
+        name: 'chatGPT',
+        meta: {title: 'chatGPT', activeMenu: '/compo/chat'}
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    hidden: true,
+    permissions: ['compo:today'],
+    children: [
+      {
+        path: '/compo/today',
+        component: () => import('@/views/system/todayonhistory/today.vue'),
+        name: '历史上的今天',
+        meta: {title: '历史上的今天', activeMenu: '/compo/today'}
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    hidden: true,
+    permissions: ['compo:hotlist'],
+    children: [
+      {
+        path: '/compo/hotlist',
+        component: () => import('@/views/system/hotlist/hotlist.vue'),
+        name: '头条热搜',
+        meta: {title: '头条热搜', activeMenu: '/compo/hotlist'}
+      }
+    ]
+  },
+  {
     path: '/system/role-auth',
     component: Layout,
     hidden: true,
