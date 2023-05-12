@@ -174,10 +174,10 @@ public class SysSomeController {
     @GetMapping("/hotsearch")
     public AjaxResult hotsearch() throws JsonProcessingException {
         AjaxResult ajax = AjaxResult.success();
-        String jsonData = getHotList();
+        String jsonData = getHotSearch();
         ObjectMapper mapper = new ObjectMapper();
         JSONObject obj = mapper.readValue(jsonData, JSONObject.class);
-        ajax.put("data", obj.getJSONObject("result"));
+        ajax.put("data2", obj.getJSONObject("result"));
         return ajax;
     }
 

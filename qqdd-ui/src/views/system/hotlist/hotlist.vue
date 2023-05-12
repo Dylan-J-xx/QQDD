@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-card class="box-card">
+  <div style="display: flex; flex-direction: row;">
+    <el-card class="box-card" style="flex: 0.5; margin-right: 20px;">
       <div slot="header" class="clearfix">
         <span>头条热搜</span>
         <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -9,7 +9,7 @@
         {{ item.word }}
       </div>
     </el-card>
-    <el-card class="box-card" style="float: left">
+    <el-card class="box-card" style="flex: 1">
       <div slot="header" class="clearfix">
         <span>全网热搜</span>
         <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -42,9 +42,20 @@
 .box-card {
   width: 480px;
 }
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both
+}
 </style>
 <script>
 import {hotlist} from "@/api/some";
+import {hotsearch} from "@/api/some";
 
 export default {
   data() {
@@ -54,16 +65,24 @@ export default {
     }
   },
   mounted() {
-    hotlist()
-      .then(res => {
-        console.log(res.data)
-        this.list = res.data.list
+    this.getlist();
+    this.search();
+  },
+  methods: {
+    getlist() {
+      hotlist()
+        .then(res => {
+          this.list = res.data.list
 
-      })
-    hotsearch()
-      .then(res => {
-        this.list2 = res.data.list
-      })
+        })
+    },
+    search() {
+      hotsearch()
+        .then(res => {
+          console.log(res.data2.list)
+          this.list2 = res.data2.list
+        })
+    }
   }
 }
 </script>
