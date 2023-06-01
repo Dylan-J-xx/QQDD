@@ -21,6 +21,7 @@
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
+        <result property="openId" column="open_id"/>
         <result property="remark" column="remark"/>
         <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
     </resultMap>
@@ -65,7 +66,7 @@
 
     <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
         select u.user_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.status, u.del_flag,
-        u.login_ip, u.login_date, u.create_by, u.create_time, u.remark from sys_user u
+        u.login_ip, u.login_date, u.create_by, u.create_time,u.open_id, u.remark from sys_user u
         where u.del_flag = '0'
         <if test="userId != null and userId != 0">
             AND u.user_id = #{userId}
@@ -104,6 +105,11 @@
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
+    </select>
+
+    <select id="selectWxUserByOpenId" parameterType="String" resultMap="SysUserResult">
+        <include refid="selectUserVo"/>
+        where u.open_id = #{openId} and u.del_flag = '0'
     </select>
 
     <select id="selectUnallocatedList" parameterType="SysUser" resultMap="SysUserResult">
@@ -167,6 +173,7 @@
         <if test="password != null and password != ''">password,</if>
         <if test="status != null and status != ''">status,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="openId != null and openId != ''">open_id,</if>
         <if test="remark != null and remark != ''">remark,</if>
         create_time
         )values(
@@ -180,6 +187,7 @@
         <if test="password != null and password != ''">#{password},</if>
         <if test="status != null and status != ''">#{status},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="openId != null and openId != ''">#{openId},</if>
         <if test="remark != null and remark != ''">#{remark},</if>
         sysdate()
         )

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.TimeZone;
 
@@ -25,5 +26,13 @@ public class ApplicationConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
         return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
+    }
+
+    /**
+     * 长途调用  HTTP 恳求东西
+     */
+    @Bean
+    public RestTemplate RestTemplate() {
+        return new RestTemplate();
     }
 }

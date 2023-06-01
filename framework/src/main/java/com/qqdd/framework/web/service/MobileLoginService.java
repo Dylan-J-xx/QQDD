@@ -1,6 +1,7 @@
 package com.qqdd.framework.web.service;
 
 
+import com.alibaba.fastjson2.JSONObject;
 import com.qqdd.common.constant.Constants;
 import com.qqdd.common.core.domain.AjaxResult;
 import com.qqdd.common.core.domain.entity.SysUser;
@@ -8,12 +9,11 @@ import com.qqdd.common.core.domain.model.LoginUser;
 import com.qqdd.common.core.redis.RedisCache;
 import com.qqdd.common.exception.ServiceException;
 import com.qqdd.common.exception.user.UserPasswordNotMatchException;
-import com.qqdd.common.utils.DictUtils;
-import com.qqdd.common.utils.MessageUtils;
-import com.qqdd.common.utils.StringUtils;
+import com.qqdd.common.utils.*;
 import com.qqdd.framework.manager.factory.AsyncFactory;
 import com.qqdd.framework.security.context.AuthenticationContextHolder;
 import com.qqdd.system.domain.LoginParams;
+import com.qqdd.system.mapper.SysUserMapper;
 import com.qqdd.system.service.ISysRoleService;
 import com.qqdd.system.service.ISysUserService;
 import org.slf4j.Logger;
@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -228,6 +229,81 @@ public class MobileLoginService {
             throw new ServiceException("请前往数据字典【sys_config】中维护注册用户岗位编码【register_post_code】");
         }
 
+    }
+
+    /**
+     * 微信登录
+     *
+     * @param decryptResult 登录凭据 只能用一次
+     * @return
+     */
+    @Autowired
+    SysUserMapper userMapper;
+
+    public String wxLogin(String openId) {
+        //字符串转json
+//        JSONObject jsonObject = JSONObject.parseObject(decryptResult);
+        //        String unionid = jsonObject.getString("unionid");
+//        String openId = jsonObject.getString("openId");
+        System.out.println("openId" + openId);
+        //获取nickName
+        String nickName = getStringRandom(16);// 生成16位随机昵称
+        //获取头像
+        //        String avatarUrl = jsonObject.getString("avatarUrl");
+//        String avatarUrl = "";
+        //还可以获取其他信息
+        //依据openid判别数据库中是否有该用户
+        //依据openid查询用户信息
+        SysUser wxUser = userMapper.selectWxUserByOpenId(openId);
+        //假如查不到，则新增，查到了，则更新
+        SysUser user = new SysUser();
+        if (wxUser == null) {
+            // 新增
+            user.setUserName(getStringRandom(16));// 生成16位随机用户名
+            user.setNickName(nickName);
+//            user.setAvatar(avatarUrl);
+            //            wxUser.setUnionId(unionid);
+            user.setOpenId(openId);
+            user.setCreateTime(DateUtils.getNowDate());
+            user.setPassword(SecurityUtils.encryptPassword("123456"));
+            //新增 用户
+            userMapper.insertUser(user);
+        } else {
+            //更新
+            user = wxUser;
+            user.setNickName(nickName);
+//            user.setAvatar(avatarUrl);
+            user.setUpdateTime(DateUtils.getNowDate());
+            userMapper.updateUser(user);
+        }
+        //组装token信息
+//        LoginUser loginUser = new LoginUser();
+//        loginUser.setOpenId(openId);
+//        //假如有的话设置
+//        loginUser.setUser(user);
+//        loginUser.setUserId(user.getUserId());
+//        // 生成token
+//        return tokenService.createToken(loginUser);
+        return user.getUserName();
+    }
+
+    //生成随机用户名，数字和字母组成,
+    public static String getStringRandom(int length) {
+        String val = "";
+        Random random = new Random();
+        //参数length，表明生成几位随机数
+        for (int i = 0; i < length; i++) {
+            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+            //输出字母仍是数字
+            if ("char".equalsIgnoreCase(charOrNum)) {
+                //输出是大写字母仍是小写字母
+                int temp = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                val += (char) (random.nextInt(26) + temp);
+            } else if ("num".equalsIgnoreCase(charOrNum)) {
+                val += String.valueOf(random.nextInt(10));
+            }
+        }
+        return val;
     }
 
 }

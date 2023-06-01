@@ -20,6 +20,14 @@ public interface SysUserMapper {
     public List<SysUser> selectUserList(SysUser sysUser);
 
     /**
+     * 依据openId查询用户信息
+     *
+     * @param openId
+     * @return
+     */
+    public SysUser selectWxUserByOpenId(String openId);
+
+    /**
      * 根据条件分页查询已配用户角色列表
      *
      * @param user 用户信息

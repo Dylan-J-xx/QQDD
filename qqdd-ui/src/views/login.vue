@@ -89,7 +89,7 @@ export default {
       },
       loading: false,
       // 验证码开关
-      captchaEnabled: true,
+      captchaEnabled: false,
       // 注册开关
       register: true,
       redirect: undefined
@@ -175,7 +175,7 @@ export default {
 
 .login-form {
   border-radius: 6px;
-  background: #ffffff;
+  background: transparent;
   width: 400px;
   padding: 25px 25px 5px 25px;
 
